@@ -6,50 +6,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{font-family:Arial;margin:0;background:#f7f7f7}
-header{background:#ff4d6d;color:white;padding:15px;font-size:20px;font-weight:bold}
-.container{padding:20px}
+body{margin:0;font-family:Arial;background:linear-gradient(to bottom,#ffe4ec,#fff,#fff4e6)}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px;background:white;border-bottom:1px solid #eee}
+.logo{display:flex;align-items:center;gap:10px}
+.logo div{background:#ff4d6d;color:white;padding:10px;border-radius:12px}
+.btn{background:#ff4d6d;color:white;padding:10px 15px;border-radius:20px;text-decoration:none}
+.container{padding:20px;max-width:1100px;margin:auto}
+.hero{display:grid;gap:20px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:white;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);overflow:hidden}
+.card{background:white;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1);overflow:hidden}
 .card img{width:100%;height:200px;object-fit:cover}
 .card h3{margin:10px}
-.card p{margin:10px;color:#555}
-.btn{display:block;margin:10px;background:#ff4d6d;color:white;text-align:center;padding:10px;border-radius:20px;text-decoration:none}
+.card p{margin:10px;color:#555;font-size:14px}
+.tag{position:absolute;top:10px;left:10px;background:white;padding:5px 10px;border-radius:20px;font-size:12px}
 </style>
-</head>
 
+</head>
 <body>
 
-<header>Mavi 3D - Catálogo</header>
+<header>
+<div class="logo">
+<div>✨</div>
+<div>
+<strong>Mavi 3D</strong><br>
+<small>Diseños personalizados</small>
+</div>
+</div>
+<a class="btn" href="https://wa.me/529981478999">WhatsApp</a>
+</header>
 
 <div class="container">
-<h2>Productos</h2>
 
-<div class="grid">
+<h1>Regalos y detalles personalizados en impresión 3D</h1>
+<p>Elige un producto y pídelo directo por WhatsApp</p>
 
+<input id="busqueda" placeholder="Buscar producto..." style="width:100%;padding:10px;border-radius:20px;border:1px solid #ddd;margin:20px 0">
+
+<div id="productos" class="grid"></div>
+
+</div>
+
+<script>
+
+const WHATSAPP = "529981478999";
+
+const productos = [
+{
+nombre:"Letras 3D",
+precio:"Desde $180",
+categoria:"Decoración",
+descripcion:"Personalizadas con nombre y colores",
+imagen:"https://images.unsplash.com/photo-1581092918056-0c4c3acd3789",
+etiqueta:"Más vendido"
+},
+{
+nombre:"Llavero",
+precio:"Desde $120",
+categoria:"Llaveros",
+descripcion:"Personalizado con nombre o logo",
+imagen:"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338",
+etiqueta:"Personalizable"
+},
+{
+nombre:"Display NFC",
+precio:"Desde $399",
+categoria:"Negocio",
+descripcion:"Comparte redes con NFC",
+imagen:"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d",
+etiqueta:"Top"
+}
+];
+
+function renderProductos(lista){
+const contenedor = document.getElementById("productos");
+contenedor.innerHTML = "";
+
+lista.forEach(p=>{
+contenedor.innerHTML += `
 <div class="card">
-<img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789">
-<h3>Letras 3D</h3>
-<p>Desde $180 MXN</p>
-<a class="btn" href="https://wa.me/529981478999?text=Quiero letras 3D">Pedir</a>
+<div style="position:relative">
+<img src="${p.imagen}">
+<div class="tag">${p.etiqueta}</div>
 </div>
+<h3>${p.nombre}</h3>
+<p>${p.descripcion}</p>
+<p><strong>${p.precio}</strong></p>
+<a class="btn" href="https://wa.me/${WHATSAPP}?text=Quiero ${p.nombre}">Cotizar</a>
+</div>
+`;
+});
+}
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338">
-<h3>Llavero personalizado</h3>
-<p>Desde $120 MXN</p>
-<a class="btn" href="https://wa.me/529981478999?text=Quiero llavero">Pedir</a>
-</div>
+document.getElementById("busqueda").addEventListener("input",(e)=>{
+const texto = e.target.value.toLowerCase();
+const filtrados = productos.filter(p =>
+p.nombre.toLowerCase().includes(texto) ||
+p.descripcion.toLowerCase().includes(texto)
+);
+renderProductos(filtrados);
+});
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d">
-<h3>Display NFC</h3>
-<p>Desde $399 MXN</p>
-<a class="btn" href="https://wa.me/529981478999?text=Quiero display NFC">Pedir</a>
-</div>
+renderProductos(productos);
 
-</div>
-</div>
+</script>
 
 </body>
 </html>
