@@ -1,227 +1,55 @@
-import React, { useMemo, useState } from "react";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mavi 3D</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const WHATSAPP = "529981478999"; // Cambia aquí el número con lada. Ejemplo: 5299812345678
-const NEGOCIO = "Mavi 3D";
+<style>
+body{font-family:Arial;margin:0;background:#f7f7f7}
+header{background:#ff4d6d;color:white;padding:15px;font-size:20px;font-weight:bold}
+.container{padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:white;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);overflow:hidden}
+.card img{width:100%;height:200px;object-fit:cover}
+.card h3{margin:10px}
+.card p{margin:10px;color:#555}
+.btn{display:block;margin:10px;background:#ff4d6d;color:white;text-align:center;padding:10px;border-radius:20px;text-decoration:none}
+</style>
+</head>
 
-const productos = [
-  {
-    nombre: "Letras 3D personalizadas",
-    categoria: "Decoración",
-    precio: "Desde $180 MXN",
-    descripcion: "Letras con nombre, colores a elegir y opción de decoración con flores o detalles especiales.",
-    etiqueta: "Más vendido",
-    imagen: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop"
-  },
-  {
-    nombre: "Llaveros personalizados",
-    categoria: "Llaveros",
-    precio: "Desde $120 MXN",
-    descripcion: "Llaveros con nombre, logo o diseño especial. Ideales para termos, mochilas o regalos.",
-    etiqueta: "Personalizable",
-    imagen: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200&auto=format&fit=crop"
-  },
-  {
-    nombre: "Display NFC para negocio",
-    categoria: "Negocios",
-    precio: "Desde $399 MXN",
-    descripcion: "Display con QR y NFC para compartir WhatsApp, redes, menú digital o datos de pago.",
-    etiqueta: "Para negocios",
-    imagen: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop"
-  },
-  {
-    nombre: "Placas para mascotas",
-    categoria: "Mascotas",
-    precio: "Desde $65 MXN",
-    descripcion: "Placas tipo huesito o figura, con nombre y teléfono. Bonitas, ligeras y resistentes.",
-    etiqueta: "Nuevo",
-    imagen: "https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1200&auto=format&fit=crop"
-  },
-  {
-    nombre: "Recuerdos para evento",
-    categoria: "Eventos",
-    precio: "Cotización especial",
-    descripcion: "Detalles personalizados para baby shower, bautizo, cumpleaños, XV años o bodas.",
-    etiqueta: "Mayoreo",
-    imagen: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1200&auto=format&fit=crop"
-  },
-  {
-    nombre: "Stands y bases personalizadas",
-    categoria: "Decoración",
-    precio: "Desde $150 MXN",
-    descripcion: "Bases para fotos, nombres, logos o decoración de escritorio y negocio.",
-    etiqueta: "Diseño a medida",
-    imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
-  }
-];
+<body>
 
-function enviarWhatsApp(producto) {
-  const mensaje = producto
-    ? `Hola, quiero información de: ${producto.nombre}`
-    : `Hola, quiero información del catálogo de ${NEGOCIO}`;
-  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
-}
+<header>Mavi 3D - Catálogo</header>
 
-export default function App() {
-  const [busqueda, setBusqueda] = useState("");
-  const [categoria, setCategoria] = useState("Todos");
+<div class="container">
+<h2>Productos</h2>
 
-  const categorias = ["Todos", ...new Set(productos.map((p) => p.categoria))];
+<div class="grid">
 
-  const productosFiltrados = useMemo(() => {
-    return productos.filter((producto) => {
-      const texto = `${producto.nombre} ${producto.categoria} ${producto.descripcion}`.toLowerCase();
-      const coincideBusqueda = texto.includes(busqueda.toLowerCase());
-      const coincideCategoria = categoria === "Todos" || producto.categoria === categoria;
-      return coincideBusqueda && coincideCategoria;
-    });
-  }, [busqueda, categoria]);
+<div class="card">
+<img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789">
+<h3>Letras 3D</h3>
+<p>Desde $180 MXN</p>
+<a class="btn" href="https://wa.me/529981478999?text=Quiero letras 3D">Pedir</a>
+</div>
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-orange-50 text-slate-900">
-      <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500 text-2xl text-white shadow-lg">
-              ✨
-            </div>
-            <div>
-              <h1 className="text-xl font-black leading-none">{NEGOCIO}</h1>
-              <p className="text-xs text-slate-500">Diseños personalizados en 3D</p>
-            </div>
-          </div>
-          <a
-            href={enviarWhatsApp()}
-            className="rounded-full bg-pink-500 px-5 py-2 text-sm font-bold text-white shadow-lg hover:bg-pink-600"
-          >
-            WhatsApp
-          </a>
-        </div>
-      </header>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338">
+<h3>Llavero personalizado</h3>
+<p>Desde $120 MXN</p>
+<a class="btn" href="https://wa.me/529981478999?text=Quiero llavero">Pedir</a>
+</div>
 
-      <main>
-        <section className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-12 md:grid-cols-2 md:py-20">
-          <div>
-            <div className="mb-4 inline-block rounded-full bg-white px-4 py-2 text-sm font-bold text-pink-600 shadow">
-              Hecho con detalle, color y personalidad
-            </div>
-            <h2 className="text-4xl font-black tracking-tight md:text-6xl">
-              Regalos y detalles personalizados en impresión 3D
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600">
-              Elige un producto, personalízalo con nombre, color o diseño, y pídelo directo por WhatsApp.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#catalogo"
-                className="rounded-full bg-slate-950 px-6 py-3 text-center font-bold text-white hover:bg-slate-800"
-              >
-                Ver catálogo
-              </a>
-              <a
-                href={enviarWhatsApp()}
-                className="rounded-full bg-pink-500 px-6 py-3 text-center font-bold text-white hover:bg-pink-600"
-              >
-                Pedir por WhatsApp
-              </a>
-            </div>
-          </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d">
+<h3>Display NFC</h3>
+<p>Desde $399 MXN</p>
+<a class="btn" href="https://wa.me/529981478999?text=Quiero display NFC">Pedir</a>
+</div>
 
-          <div className="overflow-hidden rounded-[32px] bg-white p-3 shadow-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1200&auto=format&fit=crop"
-              alt="Impresión 3D"
-              className="h-80 w-full rounded-[24px] object-cover md:h-[430px]"
-            />
-          </div>
-        </section>
+</div>
+</div>
 
-        <section id="catalogo" className="mx-auto max-w-6xl px-4 py-10">
-          <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <p className="text-sm font-black uppercase tracking-widest text-pink-500">Catálogo</p>
-              <h2 className="mt-2 text-3xl font-black md:text-4xl">Productos disponibles</h2>
-            </div>
-            <input
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              placeholder="Buscar producto..."
-              className="w-full rounded-full border border-slate-200 bg-white px-5 py-3 outline-none focus:ring-4 focus:ring-pink-100 md:w-80"
-            />
-          </div>
-
-          <div className="mb-8 flex gap-2 overflow-x-auto pb-2">
-            {categorias.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategoria(cat)}
-                className={
-                  categoria === cat
-                    ? "whitespace-nowrap rounded-full bg-pink-500 px-5 py-2 text-sm font-bold text-white shadow"
-                    : "whitespace-nowrap rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm hover:bg-slate-100"
-                }
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {productosFiltrados.map((producto) => (
-              <article key={producto.nombre} className="overflow-hidden rounded-[28px] bg-white shadow ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="relative h-56 overflow-hidden">
-                  <img src={producto.imagen} alt={producto.nombre} className="h-full w-full object-cover" />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-black text-pink-600">
-                    {producto.etiqueta}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
-                    {producto.categoria}
-                  </span>
-                  <h3 className="mt-3 text-xl font-black">{producto.nombre}</h3>
-                  <p className="mt-2 min-h-20 text-sm leading-6 text-slate-600">{producto.descripcion}</p>
-                  <div className="mt-5 flex items-center justify-between gap-3">
-                    <p className="font-black text-slate-950">{producto.precio}</p>
-                    <a
-                      href={enviarWhatsApp(producto)}
-                      className="rounded-full bg-pink-500 px-4 py-2 text-sm font-bold text-white hover:bg-pink-600"
-                    >
-                      Cotizar
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-6xl px-4 py-14">
-          <div className="rounded-[32px] bg-slate-950 p-6 text-white md:p-10">
-            <h2 className="text-3xl font-black">¿Cómo hacer tu pedido?</h2>
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
-              <div className="rounded-3xl bg-white/10 p-5">
-                <div className="mb-4 text-3xl">1️⃣</div>
-                <h3 className="font-black">Elige tu producto</h3>
-                <p className="mt-2 text-sm leading-6 text-white/70">Revisa el catálogo y selecciona el diseño que más te guste.</p>
-              </div>
-              <div className="rounded-3xl bg-white/10 p-5">
-                <div className="mb-4 text-3xl">2️⃣</div>
-                <h3 className="font-black">Personaliza</h3>
-                <p className="mt-2 text-sm leading-6 text-white/70">Envíanos nombre, tonos, logo, medida o idea de referencia.</p>
-              </div>
-              <div className="rounded-3xl bg-white/10 p-5">
-                <div className="mb-4 text-3xl">3️⃣</div>
-                <h3 className="font-black">Confirma</h3>
-                <p className="mt-2 text-sm leading-6 text-white/70">Te compartimos cotización, tiempo de entrega y anticipo para iniciar.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t bg-white px-4 py-8 text-center text-sm text-slate-500">
-        © 2026 {NEGOCIO}. Catálogo de productos personalizados en 3D.
-      </footer>
-    </div>
-  );
-}
+</body>
+</html>
